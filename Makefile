@@ -12,6 +12,7 @@ sure:
 .PHONY: build-dev
 build-dev:
 	direnv allow
+	npm run build
 	docker build \
  		-t ${ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/${APP_NAME}:dev \
  		-f ./docker/lambda.Dockerfile \
@@ -20,7 +21,6 @@ build-dev:
 .PHONY: push-dev
 push-dev:
 	direnv allow
-	npm run build
 	aws ecr get-login-password --profile ${PROFILE} --region ${REGION} | \
 	docker login --username AWS --password-stdin ${ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/${APP_NAME}
 	docker push ${ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/${APP_NAME}:dev
