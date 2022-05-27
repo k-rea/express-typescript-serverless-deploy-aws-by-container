@@ -17,12 +17,12 @@ npm install
 make create-repository
 make build-dev
 make push-dev
-npm deploy
+npm run deploy
 ```
 
 ### Destroy
 ```shell
-npm destroy
+npm run destroy
 ```
 
 
