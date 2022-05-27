@@ -1,0 +1,37 @@
+# ref:https://qiita.com/yktakaha4/items/ead117870617f45c70d5
+service: ${env:APP_NAME}
+
+provider:
+  name: aws
+  profile: ${env:PROFILE}
+  region: ${env:REGION}
+  stage: ${opt:stage, self:custom.defaultStage}
+
+custom:
+  defaultStage: dev
+
+functions:
+  index:
+    image: "${env:ACCOUNT_ID}.dkr.ecr.${env:REGION}.amazonaws.com/${env:APP_NAME}:dev" # ダイジェスト込み
+    environment:
+      BASE_PATH: "/var/task/"
+    events:
+      - http:
+          integration: lambda-proxy
+          path: /{proxy+}
+          method: ANY
+          cors: true
+          response:
+            headers:
+              Content-Type: "'application/pdf'"
+      - http:
+          integration: lambda-proxy
+          path: /
+          method: ANY
+          cors: true
+          response:
+            headers:
+              Content-Type: "'application/pdf'"
+
+
+

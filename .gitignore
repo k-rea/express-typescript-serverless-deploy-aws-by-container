@@ -1,0 +1,14 @@
+# environment
+.envrc
+
+# IDE
+.idea
+
+# package
+node_modules
+
+# serverless
+.serverless
+
+# output
+dist
